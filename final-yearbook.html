@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #c28f5244;
+    }
+
+    .body-div {
+      display: block;
+    }
+    /*--------------header--------------*/
+    .header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .logo {
+      height: 60px;
+    }
+    .schoolName {
+      font-size: 15px;
+      text-align: center;
+      font-weight: 600;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+
+    /*----------------Students---------------------*/
+    .sectionName {
+      text-align: center;
+      font-size: 25px;
+      margin-bottom: 5px;
+    }
+    .display-highHonor {
+      display: block;
+    }
+    .render {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      text-align: center;
+    }
+    .studentDiv {
+      margin-top: 5px;
+      width: 30%;
+    }
+    .studentPicture {
+      height: 65px;
+      align-content: center;
+      cursor: pointer;
+    }
+    .studentName {
+      font-size: 11px;
+      text-align: center;
+      margin: 0px;
+    }
+
+    /*--------------------sections---------*/
+
+    .display-section {
+      display: block;
+    }
+
+    /*-------------next & preveus button--------*/
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 11px;
+    }
+    
+    .print,
+    .next,
+    .previous {
+      display: block;
+      font-size: 15px;
+      background-color: transparent;
+      cursor: pointer;
+    }
+    .print {
+      margin-right: 10px;
+    }
+    .next_n_print_button {
+      display: flex;
+    }
+
+    /*-------------expand image--------*/
+
+    .expand {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+
+    .x-button {
+      font-size: 30px;
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+    .expand-image {
+      height: 300px;
+    }
+
+
+  @media (min-width: 750px) {
+
+    /*--------------header--------------*/
+    .header {
+      margin-bottom: 30px;
+    }
+    .logo {
+      height: 90px;
+    }
+    .schoolName {
+      font-size: 25px;
+      font-weight: bold;
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+
+    /*----------------Students---------------------*/
+    .sectionName {
+      font-size: 35px;
+      margin-bottom: 5px;
+    }
+    .studentDiv {
+      margin-top: 30px;
+      width: 25%;
+    }
+    .studentPicture {
+      height: 150px;
+    }
+    .studentName {
+      font-size: 20px;
+    }
+
+    /*-------------next & preveus button--------*/
+    .buttons {
+      margin-top: 20px;
+    }
+    .print,
+    .next,
+    .previous {
+      font-size: 20px;
+    }
+
+    /*-------------expand image--------*/
+    .x-button {
+      font-size: 40px;
+    }
+    .expand-image {
+      height: 500px;
+    }
+
+  }
+
+  @media print {
+    body {
+      margin: 0px;
+      padding: 0px;
+    }
+    .header {
+      margin-bottom: 0px;
+    }
+    .logo {
+      height: 100px;
+    }
+    .schoolName {
+      font-size: 25px;
+      font-weight: bold;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    /*----------------Students---------------------*/
+    .studentDiv {
+      width: 25%;
+      margin-bottom: 20px;
+    }
+    .studentPicture {
+      height: 130px;
+    }
+    .studentName {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    /*-------------next & preveus button--------*/
+    
+    /*optional*/
+    .next,
+    .next_n_print_button,
+    .print,
+    .previous,
+    .buttons {
+      display: none;
+     
+      
+    }
+    .page-break {
+      page-break-before: always;
+    }
+  }
+
+  </style>
+
+
+</head>
+<body>
+  
+  
+  <div class="expand"></div>
+  <div class="body-div">
+    <div class="header"></div>
+    <div class="display-highHonor" ></div>
+    <div class="display-honor page-break"></div>
+  </div>
+  <div class="display-section"></div>
+  <div class="buttons">
+    <button class="previous" onclick="
+      p = p - 1
+      if (p == 0) {
+        firstPage(p)
+        
+      }else {
+        pages(p)
+      }
+      pageButton(p)
+    ">PREVIOUS</button>
+    <div class="next_n_print_button">
+      <button class="print" onclick=" 
+        remove()
+        window.print()
+        adds()">Print</button>
+      <button class="next" onclick="
+        p = p + 1;
+        pages(p);
+        pageButton(p);
+      ">NEXT</button>
+    </div>
+    
+  </div>
+  
+
+  <script>
+        
+
+    const highHonor = {
+      1 : { 
+        name : "johnmark bacalso",
+        picture : "https://i.ibb.co/Prr8G0W/429792880-7569404806417034-360532660988849292-n.jpg"
+      },
+      2 : {
+        name : "sunny boy Dumanhog",
+        picture : "https://i.ibb.co/920TvhR/paper.png"
+      },
+      3 : {
+        name : "hubert dean Cabalquinto",
+        picture : "https://i.ibb.co/Prr8G0W/429792880-7569404806417034-360532660988849292-n.jpg"
+      },
+      4 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/NWGmVdb/401378353-3660283754292038-7082486224380382140-n.jpg"
+      },
+      5 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/920TvhR/paper.png"
+      },
+      6 : { 
+        name : "johnmark bacalso",
+        picture : "rock.png"
+      },
+      7 : {
+        name : "sunny boy Dumanhog",
+        picture : "https://i.postimg.cc/Vvh6fTW7/paper.png"
+      },
+      8 : {
+        name : "hubert dean Cabalquinto",
+        picture : "paper.png"
+      },
+      9 : {
+        name : "blankname dsgdydsgffy",
+        picture : "rock.png"
+      },
+      10 : {
+        name : "blankname eytertdsy",
+        picture : "rock.png"
+      },
+      11 : { 
+        name : "johnmark bacalso",
+        picture : "rock.png"
+      },
+      12 : {
+        name : "sunny boy Dumanhog",
+        picture : "paper.png"
+      },
+      13 : {
+        name : "hubert dean Cabalquinto",
+        picture : "paper.png"
+      },
+      14 : {
+        name : "blankname dsgdydsgffy",
+        picture : "rock.png"
+      },
+      15 : {
+        name : "blankname eytertdsy",
+        picture : "rock.png"
+      },
+      16 : { 
+        name : "johnmark bacalso",
+        picture : "rock.png"
+      },
+      17 : {
+        name : "sunny boy Dumanhog",
+        picture : "paper.png"
+      },
+      18 : {
+        name : "hubert dean Cabalquinto",
+        picture : "https://i.ibb.co/920TvhR/paper.png"
+      },
+      19 : {
+        name : "blankname dsgdydsgffy",
+        picture : "rock.png"
+      },
+      20 : {
+        name : "blankname eytertdsy",
+        picture : "rock.png"
+      }
+    }
+
+    const honor = {
+      1 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/HB2MpWC/336665592-169448159225469-4062009263428061267-n.jpg"
+      },
+      2 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "paper.png"
+      },
+      3 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/920TvhR/paper.png"
+      },
+      4 : {
+        name : "blankname dsgdydsgffy",
+        picture : "rock.png"
+      },
+      5 : {
+        name : "blankname eytertdsy",
+        picture : "rock.png"
+      }
+    }
+
+    const bagsik = {
+      1 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/F7xFLN6/01-OPIS.jpg"
+      },
+      2 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/4NHYxZH/02-TILAR.jpg"
+      },
+      3 : {
+        name : "blankname remandaban ",
+        picture : "https://i.ibb.co/ZGyDgcV/03-ARGATE.jpg"
+      },
+      4 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/Tkv2zxv/04-ANDON.jpg"
+      },
+      5 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/fqtZTbv/05-AZUCENAS.jpg"
+      },
+      6 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/3yGPjZ1/06-YABUT.jpg"
+      },
+      7 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/4dKwFz5/07-BUTIN.jpg"
+      },
+      8 : {
+        name : "blankname remandaban ",
+        picture : "https://i.ibb.co/mJVDGBJ/08-BALAGA.jpg"
+      },
+      9 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/4sNMNL0/09-TAPALES.jpg"
+      },
+      10 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/SR2TJ9Y/10-RUEDAS.jpg"
+      },
+      11 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/CwVhYy0/11-VALERIANO.jpg"
+      },
+      12 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/6yNDGkK/12-DESDECHADO.jpg"
+      },
+      13 : {
+        name : "blankname remandaban ",
+        picture : "https://i.ibb.co/803dW0r/13-RISOS.jpg"
+      },
+      14 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/Wx2LsFH/14-ALZAGA.jpg"
+      },
+      15 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/t3mdhSv/15-MORANO.jpg"
+      },
+      16 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/m8pkTXR/16-BALAGA.jpg"
+      },
+      17 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/Zx7RZQb/17-SERAT.jpg"
+      },
+      18 : {
+        name : "blankname remandaban ",
+        picture : "https://i.ibb.co/hCHSKW4/18-JANOLA.jpg"
+      },
+      19 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/9tqhLwG/19-GUTLADERA.jpg"
+      },
+      20 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/M7RYS7d/20-CAHIS.jpg"
+      },
+      21 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/v1NkqMS/21-ELMIDO.jpg"
+      },
+      22 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/LhDp8WZ/22-ENTINO.jpg"
+      },
+      23 : {
+        name : "blankname remandaban ",
+        picture : "https://i.ibb.co/HGzh44C/23-COMINADOR.jpg"
+      },
+      24 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/F6RFRqc/24-COMINADOR.jpg"
+      },
+      25 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/1JJjY9J/25-RINGOR.jpg"
+      },
+      26 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/Bc6sXyz/26-ZURITA.jpg"
+      },
+      27 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/ph6t8Bx/27-ABARIENTO.jpg"
+      },
+      28 : {
+        name : "blankname remandaban ",
+        picture : "https://i.ibb.co/mHRwCw3/28-AMAC.jpg"
+      }
+    }
+    
+    const kalasag = {
+      1 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/TvY4yhc/01-AMAHAN.jpg"
+      },
+      2 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/crgxC7s/02-ORIBE.jpg"
+      },
+      3 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/NFrgwn4/03-ORIBE.jpg"
+      },
+      4 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/jzTP7MD/04-ECIL.jpg"
+      },
+      5 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/3ppZTRh/05-ESPLANADA.jpg"
+      },
+      6 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/1fVFSPh/06-UNAT.jpg"
+      },
+      7 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/nzq1z6n/07-ANTIDO.jpg"
+      },
+      8 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/jyvnfsH/08-ELMIDO.jpg"
+      },
+      9 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/rQdLy75/09-CANALES.jpg"
+      },
+      10 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/bs5ZQpg/10-CAPENA.jpg"
+      },
+      11 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/Mncwt06/11-BUENA.jpg"
+      },
+      12: {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/hsk6TTc/12-PALLAR.jpg"
+      },
+      13: {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/phZ0L8W/13-CABIAS.jpg"
+      },
+      14: {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/mvFhggH/14-BARQUIN.jpg"
+      },
+      15: {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/xDYGJnn/15-CUARTERO.jpg"
+      },
+      16: { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/MR40rPv/16-ABRASALDO.jpg"
+      },
+      17: {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/HHDp23S/17-CACERES.jpg"
+      },
+      18: {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/qgqz3d3/18-ANDOR.jpg"
+      },
+      19: {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/tcZzggG/19-SUANO.jpg"
+      },
+      20: {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/RHwX35F/20-FERNANDEZ.jpg"
+      },
+      21 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/860RqjC/21-MANDIA.jpg"
+      },
+      22 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/qdvmhS6/22-BRIONES.jpg"
+      },
+      23 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/y001pfJ/23-ALVERO.jpg"
+      },
+      24 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/GHnJm9n/24-BIGNOTEA.jpg"
+      },
+      25 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/c6Z1D79/25-ALTEJAR.jpg"
+      },
+      26 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/C2dmwr0/26-PALAHANG.jpg"
+      },
+      27 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/db40mC7/27-FELONIA.jpg"
+      },
+      28 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/MfvBr10/28-CERRO.jpg"
+      },
+      29 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/jgsjFKz/29-BALMES.jpg"
+      },
+      30 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/xJY5Stg/30-GERONES.jpg"
+      },
+      31 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/8PjrxFf/31-MAPALO.jpg"
+      },
+      32 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/cNTct0K/32-CADAYONG.jpg"
+      },
+      33 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/NyPVNBf/33-CADOCOY.jpg"
+      },
+      34 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/YWDYQrr/34-EVANGELISTA.jpg"
+      },
+      35 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/qY9pypZ/35-BALAGA.jpg"
+      },
+      36 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/z44LRgz/36-CABUYOC.jpg"
+      },
+      37 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/6ythHJP/37-OBIAS.jpg"
+      },
+      38 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/TRxfCcG/38-COPIA.jpg"
+      },
+      39 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/qFZmGyt/39-MILAR.jpg"
+      },
+      40 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/Vv58z5z/40-CORTEL.jpg"
+      },
+      41 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/7NFsjsV/41-AMAHAN.jpg"
+      },
+      42 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/KjLq6x5/42-ALMADEN-Recovered.jpg"
+      },
+      43 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/kgqkjdP/43-TANA.jpg"
+      },
+      44 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/XY8149m/44-OCTA.jpg"
+      },
+      45 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/QQ3WgBg/45-CASTIL.jpg"
+      },
+      46 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/XZGbDvC/46-ORIBE.jpg"
+      },
+      47 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/3swK6Yz/47-AQUINO.jpg"
+      },
+      48 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/BZdg90y/48-UNAT.jpg"
+      },
+      49 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/r0Z7mwH/49-ESPANOL.jpg"
+      },
+      50 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/ncMPRB6/50-DELORIA.jpg"
+      },
+      51 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/y6ZvDv2/51-TABAYAG.jpg"
+      },
+      52 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/f8PnndZ/52-MEDIONA.jpg"
+      },
+      53 : {
+        name : "blankname dfdgfyhgfghggfu",
+        picture : "https://i.ibb.co/pLZLX96/53-MONTALBAN.jpg"
+      },
+      54 : {
+        name : "blankname dsgdydsgffy",
+        picture : "https://i.ibb.co/98kL5FC/54-MULA.jpg"
+      },
+      55 : {
+        name : "blankname eytertdsy",
+        picture : "https://i.ibb.co/VWkCDQT/55-COSTORIO.jpg"
+      },
+      56 : { 
+        name : "blankname balagtas",
+        picture : "https://i.ibb.co/BnrsJCk/56-REDONA.jpg"
+      },
+      57 : {
+        name : "blankname bacxfgfjkhg",
+        picture : "https://i.ibb.co/2KNhNPQ/57-PENARANDA.jpg"
+      }
+    }
+
+
+    const kamandag = {
+      1 : { 
+        name : "friday balagtas",
+        picture : "rock.png"
+      },
+      2 : {
+        name : "thursday bacxfgfjkhg",
+        picture : "paper.png"
+      },
+      3 : {
+        name : "wednesday dfdgfyhgfghggfu",
+        picture : "paper.png"
+      },
+      4 : {
+        name : "tuesday dsgdydsgffy",
+        picture : "rock.png"
+      },
+      5 : {
+        name : "monday djdshfkjshfkj",
+        picture : "rock.png"
+      }
+    }
+//--------------------------customize  logo and name of School-------------------------------
+    const heads = ["rock.png","Abuyog National High School Abuyog, Leyte","paper.png"]
+//-----------------------------------customize section list object----------------------------
+    const pagelist = [[highHonor,honor],bagsik,kalasag,kamandag]
+//----------------------------customize name of section --------------------------
+    const section_list = [["High Honors","Honors"],"Bagsik","kalasag","kamandag"]
+
+    let p = 0;
+
+    const element_expand = document.querySelector(".expand");
+    const element_body_div = document.querySelector(".body-div");
+    const element_buttons = document.querySelector(".buttons");
+    const element_display_section = document.querySelector(".display-section")
+
+    
+
+    firstPage(p)
+    pageButton(p)
+
+//----------------------------render all sections--------------------------------
+    function pages(p) {
+      element_body_div.style.display = "none"
+      element_display_section.style.display = "block"
+      
+      let section = ``;
+      let i = 1
+      while (pagelist[p][i] != undefined) {
+        section += `<div class="studentDiv">
+          <img class="studentPicture" src="${pagelist[p][i].picture}" alt="" onclick="
+          pages_expand('${pagelist[p][i].picture}')
+          ">
+          <p class="studentName">${pagelist[p][i].name}</p>
+        </div>`;
+        i++
+      }
+      element_display_section.innerHTML = `<p class="sectionName">${section_list[p]}</p><div class="render">${section}</div>`
+    }
+
+    function pages_expand(image) {
+      element_display_section.style.display = "none"
+      element_buttons.style.display = "none"
+      element_expand.style.display = "flex"
+      element_expand.innerHTML = `
+        <button class="x-button" onclick="pages_close()">x</button>
+        <img src="${image}" alt="" class="expand-image">
+      `;
+    }
+
+    function pages_close() {
+      element_expand.style.display = "none"
+      element_buttons.style.display = "flex"
+      element_display_section.style.display = "block"
+    }
+
+
+
+//--------------------------------------------first page------------------------------
+    function firstPage(p) {
+      element_display_section.style.display = "none"
+      element_body_div.style.display = "block"
+      const element_header = document.querySelector(".header");
+      const element_highHonor = document.querySelector(".display-highHonor");
+      const element_honor = document.querySelector(".display-honor");
+      
+      let header = "";
+      let highHonor = "";
+      let honor = "";
+
+//------------------header---------------------
+      header = `
+        <img class="logo" src="${heads[0]}" alt="">
+        <p class="schoolName">${heads[1]}</p>
+        <img class="logo" src="${heads[2]}" alt="">
+      `;
+
+      element_header.innerHTML = header;
+//---------------------high honor -------------------
+      let i = 1;
+      while (pagelist[p][0][i] != undefined) {
+        highHonor += `<div class="studentDiv">
+          <img class="studentPicture" src="${pagelist[p][0][i].picture}" alt="" onclick="firstpage_expand('${pagelist[p][0][i].picture}')">
+          <p class="studentName">${pagelist[p][0][i].name}</p>
+        </div>`;
+        i++
+      }
+      element_highHonor.innerHTML = `<p class="sectionName">${section_list[p][0]}</p><div class="render">${highHonor}</div>`;
+      i = 1;
+//---------------------honor-----------------------
+      while (pagelist[p][1][i] != undefined) {
+        honor += `<div class="studentDiv">
+          <img class="studentPicture" src="${pagelist[p][1][i].picture}" alt="" onclick="firstpage_expand('${pagelist[p][1][i].picture}')" >
+          <p class="studentName">${pagelist[p][1][i].name}</p>
+        </div>`;
+        i++
+      }
+      element_honor.innerHTML = `<p class="sectionName">${section_list[p][1]}</p><div class="render">${honor}</div>`;
+      i = 1;
+    }
+
+    function firstpage_expand(image) {
+      element_body_div.style.display = "none"
+      element_expand.style.display = "flex"
+      element_buttons.style.display = "none"
+      element_expand.innerHTML = `
+      <button class="x-button" onclick="firstpage_close()">x</button>
+      <img src="${image}" alt="" class="expand-image">
+     `;
+    }
+
+    function firstpage_close() {
+      element_expand.style.display = "none"
+      element_body_div.style.display = "block"
+      element_buttons.style.display = "flex"
+    }
+
+
+
+
+
+
+    function pageButton(p) {
+      const element_buttons = document.querySelector('.buttons');
+      const element_previous = document.querySelector('.previous');
+      const element_next = document.querySelector('.next');
+     
+      
+      if (p <= 0) {
+        element_previous.style.display = "none"
+        element_next.style.display = "block"
+        element_buttons.style.justifyContent = "flex-end";
+      }else if (p == pagelist.length - 1) {
+        element_next.style.display = "none"
+        element_previous.style.display = "block"
+        element_buttons.style.justifyContent = "space-between"
+
+      }else if (p > 0 && p <= pagelist.length - 1) {
+        element_previous.style.display = "block"
+        element_next.style.display = "block"
+        element_buttons.style.justifyContent = "space-between"
+      }
+      
+    }
+
+    function remove() {
+      const element_buttons = document.querySelector(".buttons");
+      element_buttons.style.display = "none"
+    }
+
+    function adds() {
+      const element_buttons = document.querySelector(".buttons");
+      element_buttons.style.display = "flex"
+    }
+
+    
+
+    
+  </script>
+</body>
+</html>
